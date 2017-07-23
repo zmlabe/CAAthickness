@@ -16,6 +16,7 @@ import read_SeaIceThick_PIOMAS as CT
 import read_PiomasArea as CA
 import statsmodels.api as sm
 from mpl_toolkits.basemap import Basemap
+from openpyxl import load_workbook
 
 ### Define directories
 directorydata1 = '/surtsey/zlabe/seaice_obs/PIOMAS/'  
@@ -41,6 +42,22 @@ months = [r'April']
 ### Call functions
 lats,lons,sitp = CT.readPiomas(directorydata1,years,0.15)
 area = CA.readPiomasArea(directorydata1)
+
+### Read in other data - column 2 is warren snow
+wb = load_workbook(directorydata2 + 'cryosat_FYI.xlsx',read_only=True)
+ws = wb.get_sheet_by_name('cryosat')
+
+# latitudes
+lats = np.array([r[0].value for r in ws.iter_rows()])
+latsq = np.asarray(map(lambda x: float(x),lats[1:]))
+
+# longitudes
+lons = np.array([r[1].value for r in ws.iter_rows()])
+lonsq = np.asarray(map(lambda x: float(x),lons[1:]))
+
+# sea ice thickness from cryosat 
+sitc = np.array([r[3].value for r in ws.iter_rows()])
+sitcq = np.asarray(map(lambda x: float(x),sitc[1:]))
 
 ### Retrieve April SIT
 sitpa = sitp[:,4,:,:]
