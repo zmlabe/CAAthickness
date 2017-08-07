@@ -408,6 +408,6 @@ plt.savefig(directoryfigure + 'CAA/caatest7.png',dpi=300)
 ### Create text files
 directorytext = '/home/zlabe/Documents/Projects/CAAthickness/Data/'
 
-np.savetxt(directorytext + 'PIOMAS_vals_05_2017.txt',
+np.savetxt(directorytext + 'PIOMAS_sit_05_2017.txt',
            np.c_[vals,sitcs,latcs,loncs],
             fmt='%1.3f')
