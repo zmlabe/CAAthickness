@@ -54,7 +54,7 @@ area = CA.readPiomasArea(directorydata1)
 
 #lonsp = lonsp-180.
 
-datacs = np.genfromtxt(directorydata2 + 'test.txt',unpack=False,
+datacs = np.genfromtxt(directorydata2 + 'cs2_04_2017.txt',unpack=False,
                        usecols=[0,1,3],skip_header=1).tolist()
                                    
 #datasort = np.asarray(sorted(datacs,key=operator.itemgetter(0)))   
@@ -116,8 +116,9 @@ lat3,lon3,sit3 = piomasReader(directorydata3,None,years)
 
 ## Retrieve April SIT
 sitpa = sit3[-1,3,:,:]
+testsit = sitp[-1,3,:,:]
         
-vals = g((lon3.flatten(),lat3.flatten()),sitpa.flatten(),(loncs,latcs))  
+vals = g((lonsp.flatten(),latsp.flatten()),testsit.flatten(),(loncs,latcs))  
 #f = si.Rbf(lat3,lon3,sitpa,kind='linear')
 #z = f(latcs,loncs)
 
@@ -332,7 +333,7 @@ m.drawmeridians(meridians,labels=[True,True,False,False],
 m.drawlsmask(land_color='dimgrey',ocean_color='mintcream')
 
 #### Plot filled contours    
-cs = m.contourf(lon3,lat3,sitpa,np.arange(0,5.1,0.1),latlon=True,
+cs = m.contourf(lonsp,latsp,testsit,np.arange(0,5.1,0.1),latlon=True,
                 extend='max')
 
 barlim = np.arange(0,6,1) 
@@ -406,8 +407,8 @@ plt.savefig(directoryfigure + 'CAA/caatest7.png',dpi=300)
 ###########################################################################
 ###########################################################################
 ### Create text files
-directorytext = '/home/zlabe/Documents/Projects/CAAthickness/Data/'
-
-np.savetxt(directorytext + 'PIOMAS_sit_05_2017.txt',
-           np.c_[vals,sitcs,latcs,loncs],
-            fmt='%1.3f')
+#directorytext = '/home/zlabe/Documents/Projects/CAAthickness/Data/'
+#
+#np.savetxt(directorytext + 'PIOMAS_sit_05_2017.txt',
+#           np.c_[vals,sitcs,sncs,latcs,loncs],
+#            fmt='%1.3f')

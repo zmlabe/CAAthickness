@@ -146,9 +146,12 @@ for i in xrange(years.shape[0]):
 directorytext = '/home/zlabe/Documents/Projects/CAAthickness/Data/'
 
 for i in xrange(years.shape[0]):
-    np.savetxt(directorytext + 'PIOMAS_sit_05_%s.txt' % years[i],
-               np.c_[interpsit[i],interpsnc[i],latvals[i],lonvals[i]],
-                fmt='%1.3f')
+    np.savetxt(directorytext + 'PIOMAS_sit_04_%s.txt' % years[i],
+               np.c_[latvals[i],lonvals[i],interpsit[i],interpsnc[i],
+                sitvals[i],snowvals[i]],fmt='%1.3f',
+                header='### Lats,Lons,PIOMAS SIT,PIOMAS Snow Depth,' \
+                'CS2 SIT,Warren Snow Depth',
+                comments='################## April %s values\n' % years[i])
     print 'Completed: Created text file of interpolation year %s!' % years[i]
 
 print 'Completed: Script done!'
