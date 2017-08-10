@@ -27,10 +27,10 @@ currentdy = str(now.day)
 currentyr = str(now.year)
 currenttime = currentmn + '_' + currentdy + '_' + currentyr
 titletime = currentmn + '/' + currentdy + '/' + currentyr
-print '\n' '----Calc sea ice thickness data sets - %s----' % titletime 
+print '\n' '----Interpolate PIOMAS/CS-2 data sets - %s----' % titletime 
 
 ### Alott time series
-yearmin = 2017
+yearmin = 2011
 yearmax = 2017
 years = np.arange(yearmin,yearmax+1,1)
 yearsp = np.arange(1979,2017+1,1)
@@ -42,23 +42,24 @@ latvals = []
 snowvals = []
 sitvals = []
 for i in xrange(years.shape[0]):
+    ### Call data files
     datacs = np.genfromtxt(directorydata2 + 'cs2_04_%s.txt' % years[i],
-                           unpack=False,usecols=[0,1,2,3],skip_header=1)
+                           unpack=False,usecols=[0,1,2,3,4],skip_header=1)
 
     ### Read CS2 data in separate arrays
-    latcs = datacs[:,0] # latitudes
+    latcs = datacs[:,1] # latitudes
     latvals.append(latcs)
     
-    loncs = datacs[:,1] # longitudes
+    loncs = datacs[:,2] # longitudes
     ### Change CS2 longitude coordinates for consistency with PIOMAS
     lon36 = np.where(loncs <= 0.)[0]
     loncs[lon36] = loncs[lon36] + 360.
     lonvals.append(loncs)
     
-    snccs = datacs[:,2] # Warren snow depth
+    snccs = datacs[:,3] # Warren snow depth
     snowvals.append(snccs)
     
-    sitcs = datacs[:,3] # CS2 sea ice thickness  
+    sitcs = datacs[:,4] # CS2 sea ice thickness  
     sitvals.append(sitcs)
     
     print '\nCompleted: Read in CS2 data for April %s!' % years[i]
@@ -121,7 +122,7 @@ sitpa = sit1[:,3,:,:]
 sncpa = snc1[:,3,:,:]
 
 ### Select years for data analysis 
-yearq = np.where(yearsp == years)[0]
+yearq = np.where(yearsp >= 2011)[0]
 sitpa = sitpa[yearq,:,:]
 sncpa = sncpa[yearq,:,:]
 
@@ -130,9 +131,9 @@ interpsit = []
 interpsnc = []
 for i in xrange(years.shape[0]):    
     psit = g((lon1.flatten(),lat1.flatten()),
-             sitpa[i,:,:].flatten(),(loncs,latcs))  
+             sitpa[i,:,:].flatten(),(lonvals[i],latvals[i]))  
     psnc = g((lon1.flatten(),lat1.flatten()),
-             sncpa[i,:,:].flatten(),(loncs,latcs))
+             sncpa[i,:,:].flatten(),(lonvals[i],latvals[i]))
              
     interpsit.append(psit)
     interpsnc.append(psnc)
@@ -151,7 +152,7 @@ for i in xrange(years.shape[0]):
                 sitvals[i],snowvals[i]],fmt='%1.3f',
                 header='### Lats,Lons,PIOMAS SIT,PIOMAS Snow Depth,' \
                 'CS2 SIT,Warren Snow Depth',
-                comments='################## April %s values\n' % years[i])
+                comments='################## FYI, April %s values\n' % years[i])
     print 'Completed: Created text file of interpolation year %s!' % years[i]
 
 print 'Completed: Script done!'
