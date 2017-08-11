@@ -241,7 +241,7 @@ barlim = np.arange(-1,2,1)
         
 fig = plt.figure()
 for i in xrange(years.shape[0]):    
-    ax = plt.subplot(2,4,i+1)               
+    ax = plt.subplot(2,4,i+1,aspect='equal')               
     adjust_spines(ax, ['left', 'bottom'])            
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -255,9 +255,12 @@ for i in xrange(years.shape[0]):
     varx = sitc[i]
     vary = sitp[i]
 
-    plt.plot(timexi[i],timeyi[i],color='k',linestyle='-',linewidth=2)
+    plt.plot(timexi[i],linei[i],linewidth=1.5,linestyle='-',
+             color='m',zorder=3)
+    plt.plot(timexi[i],timeyi[i],color='k',linestyle='-',linewidth=2,
+             zorder=2)
     plt.scatter(varx,vary,s=9,color='dodgerblue',edgecolor='darkblue',
-                linewidth=0.2,alpha=0.7)
+                linewidth=0.2,alpha=0.7,zorder=1)
     plt.xlim([0,4])
     plt.ylim([0,4])
     plt.xticks(np.arange(0,5,1),map(str,np.arange(0,5,1)),fontsize=7)
@@ -265,17 +268,17 @@ for i in xrange(years.shape[0]):
     
     ax.annotate(r'\textbf{%s, R$^{2}$=%s}' \
                 % (years[i],round(r_valuei[i]**2,2)),
-                xy=(0, 0),xytext=(0.05,1.01),xycoords='axes fraction',
+                xy=(0, 0),xytext=(0.05,1.02),xycoords='axes fraction',
                 fontsize=9,color='dimgrey',rotation=0)
                 
     ax.annotate(r'\textbf{CryoSat-2 [m]}',
-            xy=(0, 0),xytext=(0.405,0.02),xycoords='figure fraction',
+            xy=(0, 0),xytext=(0.395,0.1),xycoords='figure fraction',
             fontsize=14,color='k',rotation=0)
     ax.annotate(r'\textbf{PIOMAS [m]}',
-        xy=(0, 0),xytext=(0.05,0.62),xycoords='figure fraction',
+        xy=(0, 0),xytext=(0.05,0.64),xycoords='figure fraction',
         fontsize=14,color='k',rotation=90)
     
-    plt.subplots_adjust(hspace=0.26)
+    plt.subplots_adjust(hspace=0.)
     plt.subplots_adjust(wspace=0.3)
     
 plt.savefig(directoryfigure + 'scatter_SIT.png',dpi=300)

@@ -82,19 +82,19 @@ def calcStats(varx,vary,years):
 ###########################################################################
 ###########################################################################
 ### Assess statistics for sea ice thickness 
-timexi = []
-timeyi = []
-linei = []
-slopei = []
-r_valuei = []
+timexs = []
+timeys = []
+lines = []
+slopes = []
+r_values = []
 for i in xrange(years.shape[0]):    
-    timexiq,timeyiq,lineiq,slopeiq,r_valueiq = calcStats(snowp[i],
-                                                         snowc[i],years)    
-    timexi.append(timexiq)
-    timeyi.append(timeyiq)
-    linei.append(lineiq)
-    slopei.append(slopeiq)
-    r_valuei.append(r_valueiq)
+    timexiq,timeyiq,lineiq,slopeiq,r_valueiq = calcStats(snowc[i],
+                                                         snowp[i],years)    
+    timexs.append(timexiq)
+    timeys.append(timeyiq)
+    lines.append(lineiq)
+    slopes.append(slopeiq)
+    r_values.append(r_valueiq)
     
 ### Plot figures
 plt.rc('text',usetex=True)
@@ -237,7 +237,7 @@ plt.savefig(directoryfigure + 'piomas_snc.png',dpi=300)
 ### Plot scatter
 fig = plt.figure()
 for i in xrange(years.shape[0]):    
-    ax = plt.subplot(2,4,i+1)               
+    ax = plt.subplot(2,4,i+1,aspect='equal')               
     adjust_spines(ax, ['left', 'bottom'])            
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -251,27 +251,30 @@ for i in xrange(years.shape[0]):
     varx = snowc[i]
     vary = snowp[i]
 
-    plt.plot(timexi[i],timeyi[i],color='k',linestyle='-',linewidth=2)
-    plt.scatter(varx,vary,s=9,color='m',edgecolor='indigo',
-                linewidth=0.2,alpha=0.7)
+    plt.plot(timexs[i],lines[i],linewidth=1.5,linestyle='-',
+             color='firebrick',zorder=3)
+    plt.plot(timexs[i],timeys[i],color='k',linestyle='-',linewidth=2,
+             zorder=2)
+    plt.scatter(varx,vary,s=9,color='mediumslateblue',edgecolor='indigo',
+                linewidth=0.2,alpha=0.7,zorder=1)
     plt.xlim([0,40])
     plt.ylim([0,40])
     plt.xticks(np.arange(0,41,10),map(str,np.arange(0,41,10)),fontsize=7)
     plt.yticks(np.arange(0,41,10),map(str,np.arange(0,41,10)),fontsize=7)
     
     ax.annotate(r'\textbf{%s, R$^{2}$=%s}' \
-                % (years[i],round(r_valuei[i]**2,2)),
-                xy=(0, 0),xytext=(0.05,1.01),xycoords='axes fraction',
+                % (years[i],round(r_values[i]**2,2)),
+                xy=(0, 0),xytext=(0.05,1.02),xycoords='axes fraction',
                 fontsize=9,color='dimgrey',rotation=0)
                 
-    ax.annotate(r'\textbf{CryoSat-2 [cm]}',
-            xy=(0, 0),xytext=(0.405,0.02),xycoords='figure fraction',
+    ax.annotate(r'\textbf{Warren Snow [cm]}',
+            xy=(0, 0),xytext=(0.3933,0.1),xycoords='figure fraction',
             fontsize=14,color='k',rotation=0)
     ax.annotate(r'\textbf{PIOMAS [cm]}',
-        xy=(0, 0),xytext=(0.05,0.62),xycoords='figure fraction',
+        xy=(0, 0),xytext=(0.05,0.64),xycoords='figure fraction',
         fontsize=14,color='k',rotation=90)
     
-    plt.subplots_adjust(hspace=0.26)
+    plt.subplots_adjust(hspace=0.)
     plt.subplots_adjust(wspace=0.3)
     
 plt.savefig(directoryfigure + 'scatter_snc.png',dpi=300)
