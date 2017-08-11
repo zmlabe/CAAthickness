@@ -55,8 +55,8 @@ for i in xrange(years.shape[0]):
     filename = 'PIOMAS_sit_04_%s.txt' % years[i]
     data = np.genfromtxt(directorydata + filename,unpack=False,
                          usecols=[0,1,2,3,4,5],skip_header=2)
-    lonq = data[:,0]
-    latq = data[:,1]
+    latq = data[:,0]
+    lonq = data[:,1]
     sitpq = data[:,2]
     snowpq = data[:,3]
     sitcq = data[:,4]
