@@ -21,7 +21,7 @@ import nclcmaps as ncm
 
 ### Define directories
 directorydata = '/home/zlabe/Documents/Projects/CAAthickness/Data/'
-directoryfigure = '/home/zlabe/Desktop/CAA2'
+directoryfigure = '/home/zlabe/Desktop/CS2PIOMAS/Snow/'
 
 ### Define time           
 now = datetime.datetime.now()
@@ -118,11 +118,11 @@ def adjust_spines(ax, spines):
         
 ###########################################################################
 ### Plot absolute differences
-barlim = np.arange(-20,21,20)        
+barlim = np.arange(-40,41,20)        
         
 fig = plt.figure()
 for i in xrange(years.shape[0]):
-    diffsnc = snowp[i] - snowc[i]
+    diffsnc = snowc[i] - snowp[i]
     diffsnc[np.isnan(diffsnc)]=0.0
 
     ax = plt.subplot(2,4,i+1)    
@@ -133,7 +133,7 @@ for i in xrange(years.shape[0]):
     m.drawlsmask(land_color='dimgrey',ocean_color='mintcream')
     
     x,y = m(lonvals[i],latvals[i])
-    cs = m.hexbin(x,y,C=diffsnc,vmin = -50,vmax = 50)
+    cs = m.hexbin(x,y,C=diffsnc,vmin = -40,vmax = 40)
     
     cmap = ncm.cmap('NCV_blu_red')            
     cs.set_cmap(cmap)  

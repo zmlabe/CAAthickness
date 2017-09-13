@@ -21,7 +21,7 @@ import nclcmaps as ncm
 
 ### Define directories
 directorydata = '/home/zlabe/Documents/Projects/CAAthickness/Data/'
-directoryfigure = '/home/zlabe/Desktop/CAA2'
+directoryfigure = '/home/zlabe/Desktop/CS2PIOMAS/Thickness/'
 
 ### Define time           
 now = datetime.datetime.now()
@@ -123,7 +123,7 @@ barlim = np.arange(-1,2,1)
         
 fig = plt.figure()
 for i in xrange(years.shape[0]):
-    diffsit = sitp[i] - sitc[i]
+    diffsit = sitc[i] - sitp[i]
     diffsit[np.isnan(diffsit)]=0.0
 
     ax = plt.subplot(2,4,i+1)    
