@@ -38,6 +38,7 @@ print('\n' '----Calc sea ice thickness data sets - %s----\n' % titletime)
 yearmin = 2011
 yearmax = 2017
 years = np.arange(yearmin,yearmax+1,1)
+yearsq = np.append(years,years)
 months = [r'April']
 
 ### Read in data
@@ -105,6 +106,10 @@ for i in range(14):
     barlim = np.arange(0,4,3) 
     cs.set_cmap(cmocean.cm.thermal)
     m.fillcontinents(color='dimgrey')
+    
+    ax.annotate(r'\textbf{%s}' % yearsq[i],xy=(0,0),xytext=(0.865,0.90),
+         textcoords='axes fraction',color='k',fontsize=11,
+         rotation=320,ha='center',va='center')
     
 cbar_ax = fig.add_axes([0.313,0.12,0.4,0.03])                
 cbar = fig.colorbar(cs,cax=cbar_ax,orientation='horizontal',
