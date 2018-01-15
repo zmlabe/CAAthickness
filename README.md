@@ -1,7 +1,7 @@
 # CAAthickness
 Canadian Arctic Archipelago - sea ice thickness
 
-###### Under construction... ```[Python 2.7]```
+###### Under construction... ```[Python 3.6]```
 
 ## Contact
 Zachary Labe - [Research Website](http://sites.uci.edu/zlabe/) - [@ZLabe](https://twitter.com/ZLabe)
