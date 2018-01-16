@@ -51,8 +51,8 @@ for i in range(years.shape[0]):
     latq = data[:,0]
     lonq = data[:,1]
     sitpq = data[:,2]
-    situq = data[:,3]
-    sitcq = data[:,4]
+    situq = data[:,4]
+    sitcq = data[:,5]
     
     lonvals.append(lonq)
     latvals.append(latq)
@@ -218,7 +218,7 @@ ax.spines['left'].set_linewidth(2)
 ax.spines['bottom'].set_linewidth(2)
 ax.tick_params('both',length=4,width=2,which='major',color='darkgrey')
 
-color=iter(cmocean.cm.thermal(np.linspace(0.1,0.8,len(meansit))))
+color=iter(cmocean.cm.thermal(np.linspace(0.1,0.7,len(meansit))))
 for i in range(len(meansit)):
     c=next(color)
     plt.plot(meansit[i],linewidth=2.5,color=c,alpha=1,linestyle='-',

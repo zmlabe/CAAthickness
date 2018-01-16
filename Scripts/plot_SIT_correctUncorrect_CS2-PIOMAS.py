@@ -50,8 +50,8 @@ for i in range(years.shape[0]):
     latq = data[:,0]
     lonq = data[:,1]
     sitpq = data[:,2]
-    situq = data[:,3]
-    sitcq = data[:,4]
+    situq = data[:,4]
+    sitcq = data[:,5]
     
     lonvals.append(lonq)
     latvals.append(latq)
