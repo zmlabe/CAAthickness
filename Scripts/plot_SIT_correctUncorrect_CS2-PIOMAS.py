@@ -11,6 +11,7 @@ Notes
 ### Import modules
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as c
 import datetime
 from mpl_toolkits.basemap import Basemap
 import nclcmaps as ncm
@@ -99,10 +100,11 @@ for i in range(14):
     #### Plot filled contours 
     x,y = m(x1,y1)
     diff[np.isnan(diff)]=0.0
-    cs = m.hexbin(x,y,C=diff,vmin = -2,vmax = 2) 
+    csm=plt.get_cmap(ncm.cmap('NCV_blu_red'),16)
+    norm = c.BoundaryNorm(np.arange(-4,4.5,0.5),csm.N)
+    cs = m.hexbin(x,y,C=diff,vmin = -4,vmax = 4,cmap=csm,norm=norm) 
     
-    barlim = np.arange(-2,3,2) 
-    cs.set_cmap(ncm.cmap('NCV_blu_red'))
+    barlim = np.arange(-4,5,1) 
     m.fillcontinents(color='dimgrey')
     
     ax.annotate(r'\textbf{%s}' % yearsq[i],xy=(0,0),xytext=(0.865,0.90),
@@ -114,7 +116,7 @@ cbar = fig.colorbar(cs,cax=cbar_ax,orientation='horizontal',
                     extend='both',extendfrac=0.07,drawedges=False)                      
 cbar.set_ticks(barlim)
 cbar.set_ticklabels(list(map(str,barlim)))    
-cbar.set_label(r'\textbf{Difference (m)}',color='k',labelpad=0.1)
+cbar.set_label(r'\textbf{Sea Ice Thickness (CS-2--PIOMAS)(m)}',color='k',labelpad=0.4)
 cbar.ax.tick_params(axis='x', size=.001)
 cbar.outline.set_edgecolor('dimgrey')
 

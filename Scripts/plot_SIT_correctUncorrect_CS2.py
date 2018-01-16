@@ -91,7 +91,7 @@ for i in range(14):
         m = Basemap(projection='ortho',lon_0=-90,
                     lat_0=70,resolution='l',round=True)
     elif style == 'polar':
-        m = Basemap(projection='npstere',boundinglat=56,lon_0=270,
+        m = Basemap(projection='npstere',boundinglat=57,lon_0=270,
                     resolution='l',round =True)
         
     m.drawmapboundary(fill_color='darkgrey',linewidth=0.7)
@@ -101,10 +101,11 @@ for i in range(14):
     #### Plot filled contours 
     x,y = m(x1,y1)
     comp[np.isnan(comp)]=0.0
-    cs = m.hexbin(x,y,C=comp,vmin = 0,vmax = 3) 
+    csm=plt.get_cmap(cmocean.cm.thermal,7)
+    norm = c.BoundaryNorm([0,1,2,3,4,5,6,7],csm.N)
+    cs = m.hexbin(x,y,C=comp,vmin = 0,vmax = 7,cmap=csm,norm=norm) 
     
-    barlim = np.arange(0,4,3) 
-    cs.set_cmap(cmocean.cm.thermal)
+    barlim = np.arange(0,8,1) 
     m.fillcontinents(color='dimgrey')
     
     ax.annotate(r'\textbf{%s}' % yearsq[i],xy=(0,0),xytext=(0.865,0.90),
@@ -112,11 +113,11 @@ for i in range(14):
          rotation=320,ha='center',va='center')
     
 cbar_ax = fig.add_axes([0.313,0.12,0.4,0.03])                
-cbar = fig.colorbar(cs,cax=cbar_ax,orientation='horizontal',
+cbar = plt.colorbar(cs,cax=cbar_ax,orientation='horizontal',
                     extend='max',extendfrac=0.07,drawedges=False)                      
 cbar.set_ticks(barlim)
 cbar.set_ticklabels(list(map(str,barlim)))    
-cbar.set_label(r'\textbf{Thickness (m)}',color='k',labelpad=0.1)
+cbar.set_label(r'\textbf{Sea Ice Thickness (m)}',color='k',labelpad=0.1)
 cbar.ax.tick_params(axis='x', size=.001)
 cbar.outline.set_edgecolor('dimgrey')
 
