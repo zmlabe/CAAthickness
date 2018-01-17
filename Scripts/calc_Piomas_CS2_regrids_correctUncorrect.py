@@ -169,5 +169,10 @@ for i in range(years.shape[0]):
                 header='### Lats,Lons,PIOMAS SIT,PIOMAS Snow,CS2U SIT,CS2C SIT',
                 comments='################## FYI, April %s values\n' % years[i])
     print('Completed: Created text file of interpolation year %s!' % years[i])
+    
+for i in range(years.shape[0]):
+    np.savetxt(directorytext + 'PIOMAS_SnowDepth_04_%s.txt' % years[i],
+               np.c_[interpsnow[i]],fmt='%1.3f')
+    print('Completed: Created text file of interpolation year %s!' % years[i])
 
 print('Completed: Script done!')
